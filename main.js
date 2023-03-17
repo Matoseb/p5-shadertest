@@ -3,7 +3,9 @@ import 'p5'
 import Shader from './shader'
 
 let shader
-let normal, canvas, vid, distort, cave
+let normal, canvas, distort
+let turbulenceVid
+let cave
 
 window.setup = () => {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -14,12 +16,12 @@ window.setup = () => {
 
   shader = new Shader({ canvas, vertex: '/shader/shader.vert', fragment: '/shader/shader.frag' })
 
-  vid = document.createElement('video')
-  vid.src = '/displace.mp4'
-  vid.loop = true
-  vid.muted = true
-  vid.autoplay = true
-  vid.play()
+  turbulenceVid = document.createElement('video')
+  turbulenceVid.src = '/displace.mp4'
+  turbulenceVid.loop = true
+  turbulenceVid.muted = true
+  turbulenceVid.autoplay = true
+  turbulenceVid.play()
 
   cave = loadImage('/cave.png')
   normal = loadImage('/normal3.png')
@@ -47,7 +49,7 @@ function drawDistort() {
 
   drawingContext.globalCompositeOperation = 'overlay'
   drawingContext.globalAlpha = 0.03
-  drawingContext.drawImage(vid, 0, 0)
+  drawingContext.drawImage(turbulenceVid, 0, 0)
   drawingContext.globalCompositeOperation = 'source-over'
   drawingContext.globalAlpha = 1
   drawingContext.restore()
