@@ -48,16 +48,16 @@ function drawDistort() {
   const drawingContext = distort.drawingContext
   drawingContext.save()
 
-  drawingContext.globalCompositeOperation = 'overlay'
+  distort.push()
+  distort.background('rgb(128,128,255)')
   drawingContext.globalAlpha = 0.03
+  drawingContext.globalCompositeOperation = 'overlay'
   drawingContext.drawImage(turbulenceVid, 0, 0)
   drawingContext.globalCompositeOperation = 'source-over'
   drawingContext.globalAlpha = 1
   drawingContext.restore()
-
-  distort.push()
+  
   drawingContext.globalAlpha = 0.3
-  distort.background('rgb(128,128,255)')
   distort.translate(mouseX, mouseY)
   distort.scale(0.5)
   distort.image(normal, 0, 0)
