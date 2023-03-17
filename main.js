@@ -3,10 +3,14 @@ import 'p5'
 import Shader from './shader'
 
 let shader
-let normal, canvas, vid, cave
+let normal, canvas, vid, distort, cave
 
 window.setup = () => {
   canvas = createCanvas(windowWidth, windowHeight);
+
+  distort = createGraphics(windowWidth, windowHeight);
+  distort.imageMode(CENTER)
+
 
   shader = new Shader({ canvas, vertex: '/shader/shader.vert', fragment: '/shader/shader.frag' })
 
@@ -23,37 +27,42 @@ window.setup = () => {
 }
 
 window.draw = () => {
+  drawDistort()
+
   push()
-  background('rgb(128,128,255)')
-
-
-  drawingContext.globalCompositeOperation = 'overlay'
-
-  drawingContext.globalAlpha = 0.03
-  drawingContext.drawImage(vid, 0, 0)
-  drawingContext.globalAlpha = 0.3
-
-  imageMode(CENTER)
-
-  translate(mouseX, mouseY)
-  scale(0.5)
-  image(normal, 0, 0)
-
-  drawingContext.globalCompositeOperation = 'source-over'
-  drawingContext.globalAlpha = 1
-
-
-
+  image(cave, 0, 0, width, height, 0, 0, cave.width, cave.height, COVER)
   pop()
 
   shader.update({
-    iChannel1: cave,
-    iChannel0: canvas
+    iChannel1: canvas,
+    iChannel0: distort
   })
 
   shader.enable(!mouseIsPressed)
 }
 
+function drawDistort() {
+  const drawingContext = distort.drawingContext
+  drawingContext.save()
+
+  drawingContext.globalCompositeOperation = 'overlay'
+  drawingContext.globalAlpha = 0.03
+  drawingContext.drawImage(vid, 0, 0)
+  drawingContext.globalCompositeOperation = 'source-over'
+  drawingContext.globalAlpha = 1
+  drawingContext.restore()
+
+  distort.push()
+  drawingContext.globalAlpha = 0.3
+  distort.background('rgb(128,128,255)')
+  distort.translate(mouseX, mouseY)
+  distort.scale(0.5)
+  distort.image(normal, 0, 0)
+  distort.pop()
+
+}
+
 window.windowResized = () => {
   resizeCanvas(windowWidth, windowHeight)
+  distort.resizeCanvas(width, height)
 }
