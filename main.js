@@ -21,6 +21,7 @@ window.setup = () => {
   turbulenceVid.loop = true
   turbulenceVid.muted = true
   turbulenceVid.autoplay = true
+  turbulenceVid.setAttribute('playsinline', true)
   turbulenceVid.play()
 
   cave = loadImage('./cave.png')
