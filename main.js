@@ -14,17 +14,17 @@ window.setup = () => {
   distort.imageMode(CENTER)
 
 
-  shader = new Shader({ canvas, vertex: '/shader/shader.vert', fragment: '/shader/shader.frag' })
+  shader = new Shader({ canvas, vertex: './shader/shader.vert', fragment: './shader/shader.frag' })
 
   turbulenceVid = document.createElement('video')
-  turbulenceVid.src = '/displace.mp4'
+  turbulenceVid.src = './displace.mp4'
   turbulenceVid.loop = true
   turbulenceVid.muted = true
   turbulenceVid.autoplay = true
   turbulenceVid.play()
 
-  cave = loadImage('/cave.png')
-  normal = loadImage('/normal3.png')
+  cave = loadImage('./cave.png')
+  normal = loadImage('./normal3.png')
   noStroke()
 }
 

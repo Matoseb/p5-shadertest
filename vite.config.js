@@ -4,5 +4,5 @@ export default {
         host: true,
     },
 
-    base: '/',
+    base: '',
 }
